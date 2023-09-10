@@ -13,7 +13,7 @@ const RequisitionDetailsForm: React.FC<{
   handleTab: (n: PageNumbers) => void;
 }> = ({ handleTab }) => {
 
-const {state, setState} = useData()
+const {state, setState} = useData()!;
 
   const {
     handleChange,

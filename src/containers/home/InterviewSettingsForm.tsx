@@ -42,7 +42,7 @@ const InterviewDetailsForm: React.FC<{
       alert("Form successfully submitted");
     },
   });
-  const { state, setState } = useData();
+  const { state, setState } = useData()!;
 
   const handleInterviewChange = (key: string, value: string) => {
     setState({
