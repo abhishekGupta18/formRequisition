@@ -29,7 +29,11 @@ const JobDetailsForm: React.FC<{
       },
     });
 
-    const { state, setState } = useData();
+    const { state, setState } = useData()!;
+
+    if(!state){
+      return <div>Loading or Error Message</div>;
+    }
 
   const handleJobDetailsChange = (e: any) => {
     const { name, value } = e.target;
