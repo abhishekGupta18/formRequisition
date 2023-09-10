@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { PageNumbers } from "../../interface/home";
 import { IJobDetails } from "../../interface/forms";
+import { useData } from "./DataProvider";
 
 const JobDetailsForm: React.FC<{
   handleTab: (n: PageNumbers) => void;
@@ -28,14 +29,30 @@ const JobDetailsForm: React.FC<{
       },
     });
 
+    const { state, setState } = useData();
+
+  const handleJobDetailsChange = (e: any) => {
+    const { name, value } = e.target;
+    setState({
+      ...state,
+      jobDetails: { ...state.jobDetails, [name]: value },
+    });
+    handleChange(e);
+    console.log(state.jobDetails);
+  };
+
   return (
-    <Box width="100%" as="form" onSubmit={handleSubmit as any}>
+    <Box width="100%" as="form" onSubmit={(e)=>{
+      e.preventDefault()
+      handleSubmit(e)
+      handleTab(2)
+    }}>
       <Box width="100%">
         <FormInput
           label="Job Title"
           placeholder="Enter job title"
           name="jobTitle"
-          onChange={handleChange}
+          onChange={handleJobDetailsChange}
           onBlur={handleBlur}
           value={values?.jobTitle}
           error={errors?.jobTitle}
@@ -45,7 +62,7 @@ const JobDetailsForm: React.FC<{
           label="Job Details"
           placeholder="Enter job details"
           name="jobDetails"
-          onChange={handleChange}
+          onChange={handleJobDetailsChange}
           onBlur={handleBlur}
           value={values?.jobDetails}
           error={errors?.jobDetails}
@@ -55,7 +72,7 @@ const JobDetailsForm: React.FC<{
           label="Job Location"
           name="jobLocation"
           placeholder="Enter job location"
-          onChange={handleChange}
+          onChange={handleJobDetailsChange}
           onBlur={handleBlur}
           error={errors.jobLocation}
           touched={touched.jobLocation}

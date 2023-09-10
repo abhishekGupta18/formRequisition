@@ -9,6 +9,7 @@ import {
   interviewLanguageOptions,
   interviewModeOptions,
 } from "./constants";
+import { useData } from "./DataProvider";
 
 const InterviewDetailsForm: React.FC<{
   handleTab: (n: PageNumbers) => void;
@@ -31,6 +32,15 @@ const InterviewDetailsForm: React.FC<{
       alert("Form successfully submitted");
     },
   });
+  const { state, setState } = useData();
+
+  const handleInterviewChange = (key: string, value: string) => {
+    setState({
+      ...state,
+      interviewSettings: { ...state.interviewSettings, [key]: value },
+    });
+    setFieldValue(key, value);
+  };
 
   return (
     <Box width="100%" as="form" onSubmit={handleSubmit as any}>
@@ -40,7 +50,7 @@ const InterviewDetailsForm: React.FC<{
           placeholder="Select interview mode"
           name="interviewMode"
           options={interviewModeOptions}
-          onChange={setFieldValue}
+          onChange={handleInterviewChange}
           onBlur={setFieldTouched}
           value={values?.interviewMode}
           error={errors?.interviewMode}
@@ -51,7 +61,7 @@ const InterviewDetailsForm: React.FC<{
           placeholder="Select interview duration"
           name="interviewDuration"
           options={interviewDurationOptions}
-          onChange={setFieldValue}
+          onChange={handleInterviewChange}
           onBlur={setFieldTouched}
           value={values?.interviewDuration}
           error={errors?.interviewDuration}
@@ -62,7 +72,7 @@ const InterviewDetailsForm: React.FC<{
           name="interviewLanguage"
           placeholder="Select interview language"
           options={interviewLanguageOptions}
-          onChange={setFieldValue}
+          onChange={handleInterviewChange}
           onBlur={setFieldTouched}
           error={errors.interviewLanguage}
           touched={touched.interviewLanguage}
