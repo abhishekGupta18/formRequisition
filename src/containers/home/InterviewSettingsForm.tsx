@@ -4,6 +4,7 @@ import FormSelect from "../../components/formComponents/FormSelect";
 import { useFormik } from "formik";
 import { PageNumbers } from "../../interface/home";
 import { IInterViewSettings } from "../../interface/forms";
+import * as Yup from "yup";
 import {
   interviewDurationOptions,
   interviewLanguageOptions,
@@ -27,6 +28,15 @@ const InterviewDetailsForm: React.FC<{
       interviewDuration: "",
       interviewLanguage: "",
     },
+    validationSchema: Yup.object().shape({
+      interviewMode: Yup.string().required("Interview modeis required"),
+      interviewDuration: Yup.string().required(
+        "Interview Duration is required"
+      ),
+      interviewLanguage: Yup.string().required(
+        "Interview Language is required"
+      ),
+    }),
     onSubmit: (values) => {
       console.log({ values });
       alert("Form successfully submitted");
@@ -50,6 +60,7 @@ const InterviewDetailsForm: React.FC<{
           placeholder="Select interview mode"
           name="interviewMode"
           options={interviewModeOptions}
+          // onChange={setFieldValue}
           onChange={handleInterviewChange}
           onBlur={setFieldTouched}
           value={values?.interviewMode}
@@ -61,6 +72,7 @@ const InterviewDetailsForm: React.FC<{
           placeholder="Select interview duration"
           name="interviewDuration"
           options={interviewDurationOptions}
+          // onChange={setFieldValue}
           onChange={handleInterviewChange}
           onBlur={setFieldTouched}
           value={values?.interviewDuration}
@@ -72,6 +84,7 @@ const InterviewDetailsForm: React.FC<{
           name="interviewLanguage"
           placeholder="Select interview language"
           options={interviewLanguageOptions}
+          // onChange={setFieldValue}
           onChange={handleInterviewChange}
           onBlur={setFieldTouched}
           error={errors.interviewLanguage}
