@@ -42,21 +42,31 @@ const JobDetailsForm: React.FC<{
   };
 
   return (
-    <Box width="100%" as="form" onSubmit={(e)=>{
-      e.preventDefault()
-      handleSubmit(e)
-      handleTab(2)
+    <Box width="100%" as="form" onSubmit={(e: any) => {
+      if (
+        state.jobDetails.jobTitle &&
+        state.jobDetails.jobDetails &&
+        state.jobDetails.jobLocation
+      ) {
+        e.preventDefault();
+        handleSubmit(e);
+        handleTab(2);
+      } else {
+        e.preventDefault();
+        handleSubmit(e)
+      }
     }}>
       <Box width="100%">
         <FormInput
           label="Job Title"
           placeholder="Enter job title"
           name="jobTitle"
-          onChange={handleJobDetailsChange}
+          onChange={  handleJobDetailsChange}
           onBlur={handleBlur}
           value={values?.jobTitle}
           error={errors?.jobTitle}
           touched={touched?.jobTitle}
+        
         />
         <FormInput
           label="Job Details"
